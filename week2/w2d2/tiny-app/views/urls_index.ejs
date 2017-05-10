@@ -1,0 +1,30 @@
+<!-- views/urls.ejs -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>TinyApp</title>
+</head>
+<body><%- include ./partials/_header.ejs %>
+  <div style="margin-top:100px; display:flex;justify-content: space-around; ">
+    <h2>Short URL</h2> <h2>Long URL</h2>
+  </div>
+  <div style="display:flex;justify-content: space-around;">
+  <ul style="list-style: none;">
+    <% for (let url in urlDatabase){ %>
+    <li><%= url %> - - - - <%= urlDatabase[url]%>
+       <section style="display:flex; margin-top:20px;">
+         <!-- <form id="myform"  method="GET" action="/urls/<%= url %>">
+           <input type="submit" value="Edit"></form> -->
+           <form id="myform"  method="GET" action="/urls/<%= url %>">
+           <input type="submit" value="Edit"></form>
+         <form style="margin-left:1vw" method="POST" action=<%=`/urls/${url}/delete`%>>
+           <input type="submit" value="Delete"></form>
+       </section>
+    </li><% } %>
+  </ul>
+  </div>
+</body>
+</html>
+
