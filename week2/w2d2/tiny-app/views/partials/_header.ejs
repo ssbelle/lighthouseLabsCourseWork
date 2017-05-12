@@ -1,19 +1,15 @@
+<section style="width:100%; background-color: #666; height:100px; display:flex; justify-content: space-between; align-items: center;">
+  <div style="display:flex;">
+    <a href="/urls">Home</a>
+    <a href="/urls/new">New Link</a>
 
-<div style="width:100%; background-color: #666; height:100px; display:flex; justify-content: space-between; align-items: center;">
-<a href="/urls">Home</a>
-<a href="/urls/new">New Link</a>
-
-<% if (!username){ %>
-<form method="POST" action= "/login" >
-      <label for="username">Enter a URL:</label>
-      <input id="username" type="text" name="username">
-      <input type="submit" value="Sign-In">
-</form><% } else { %>
-<form method="POST" action= "/logout" >
-      <label for= "username">Hi </label> <%= username  %>
-      <input type="submit" value="Log Out">
-</form><% } %>
-
-</div>
-
-
+    <% if (!user){ %>
+      <a href= "/register">Register</a>
+      <a href= "/login">Sign-In</a>
+    <% } else { %>
+      <form method="POST" action= "/logout" >
+        <label for= "email">Hi </label> <%= user.email  %>
+        <input type="submit" value="Log Out">
+      </form><% } %>
+  </div>
+</section>
