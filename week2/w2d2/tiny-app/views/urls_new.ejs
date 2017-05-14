@@ -1,12 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head></head>
-  <body >
-    <% include partials/_header %>
+
+  <div class ="header-rainbow"></div>
+    <div class="secondary-nav-bar">
+
+    </div>
+
+    <% if (!user){ %>
+    <p>To create a new link please</p>
+    <a href="/register">Register</a>
+    <a href="/login">OR Sign-In</a>
+<% } else { %>
     <form action="/urls" method="POST" style="margin:150px;">
       <label for="longURL">Enter a URL:</label>
       <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
       <input type="submit" value="Submit">
-    </form>
-  </body>
-</html>
+    </form><% } %>
+
+
+
+
+

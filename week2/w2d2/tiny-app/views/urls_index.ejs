@@ -1,30 +1,76 @@
-<!-- views/urls.ejs -->
+<!-- views/urls.ejs  Home page -->
 
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>TinyApp</title>
-</head>
+  <head>
+    <title>TinyApp</title>
+    <link rel= "stylesheet" type="text/css" href="./style.css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300, 400, 500, 600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Hammersmith+One" rel="stylesheet">
+  </head>
 <body>
 <% include ./partials/_header.ejs %>
-  <div style="margin-top:100px; display:flex;justify-content:space-around; ">
-    <h2>Short URL</h2>
-    <h2>Long URL</h2>
+
+<!-- Home page if user is NOT logged in -->
+<% if (!user){ %>
+<div class="new-link-input-field" style="
+    font-size: 1vw;
+    color: #fff;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.1em;">
+    REGISTER AND LOG-IN TO GET STARTED</div>
+<section class="main-content-wrapper" style="margin-top:5vw">
+  <div class="main-content" style="margin: 3vw;">
+    <h1>TinyApp Magic</h1>
+    <span>Say more in your tweets by using TinyApp to shorten your links!</span>
+    <p>Visit or direct traffic to your sites with the short cute version of your links!<br>With all the functionality of your original URLs plus more!</p>
+    <p>Features coming soon:<br>Count the number of visits to your links and add other analytics features for just $5 USD/month!</p>
   </div>
-  <div style="display:flex;justify-content: space-around;">
-    <ul style="list-style: none;">
-    <% for (let url in urlDatabase){ %>
-      <li><%= url %> - - - - <%= urlDatabase[url]%>
-         <section style="display:flex; margin-top:20px;">
-           <form id="myform"  method="GET" action="/urls/<%= url %>">
-           <input type="submit" value="Edit"></form>
-           <form style="margin-left:1vw" method="POST" action=<%=`/urls/${url}/delete`%>>
-           <input type="submit" value="Delete"></form>
-         </section>
-      </li><% } %>
-    </ul>
+</section>
+
+<!-- Home page if user IS logged in -->
+<% } else { %>
+<div class="new-link-input-field" style="
+    font-size: 1.2em;
+    color: #fff;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.1em;"><form action="/urls" method="POST" style="margin:150px;">
+      <label for="longURL">CREATE A NEW LINK:</label>
+      <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
+      <input type="submit" value="Submit">
+    </form>
+   </div>
+<section class="main-content-wrapper" style="margin-top:5vw">
+  <div class="main-content">
+    <h2>VIEW YOUR URLS HERE</h2>
+    <h4>Create a new link to get started!</h4>
   </div>
+</section>
+<section class="user-urls-list">
+  <ul class="ul-user-url-list">
+    <% for (let newShortURL in urlDatabase){ %>
+      <li class="li-user-url-list"><%= urlDatabase[newShortURL].longURL %><br><br>
+      <div class="user-list-bottom">
+      <a class="body-links" target="_blank" href = "<%= urlDatabase[newShortURL].longURL %>"><%= newShortURL %></a>
+      <form id="myform"  method="GET" action="/urls/<%= newShortURL %>">
+        <input type="submit" value="Edit"></form>
+        <form style="margin-left:1vw" method="POST" action= <%=`/urls/${newShortURL}/delete`%> >
+        <input type="submit" value="Delete"></form>
+      </div>
+      </li>
+      <% } %>
+  </ul>
+</section>
+<% } %>
 </body>
 </html>
 

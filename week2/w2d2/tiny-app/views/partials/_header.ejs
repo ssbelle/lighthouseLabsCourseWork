@@ -1,15 +1,31 @@
-<section style="width:100%; background-color: #666; height:100px; display:flex; justify-content: space-between; align-items: center;">
-  <div style="display:flex;">
-    <a href="/urls">Home</a>
-    <a href="/urls/new">New Link</a>
 
-    <% if (!user){ %>
-      <a href= "/register">Register</a>
-      <a href= "/login">Sign-In</a>
-    <% } else { %>
-      <form method="POST" action= "/logout" >
-        <label for= "email">Hi </label> <%= user.email  %>
-        <input type="submit" value="Log Out">
-      </form><% } %>
+
+<!-- Global Header for home page  -->
+<div class="header-rainbow"></div>
+<section class="header-main">
+  <div class="nav-links-left" >
+    <a href="/urls"><img class="logo" src ="img/tinyapp-img.png"></a>
+
+
+<!-- Home page nav bar if user is NOT logged in -->
+<% if (!user){ %>
+    <a href="/urls">HOME</a>
+    <a href="/urls/new">NEW LINK</a>
   </div>
+  <div class="nav-links-right">
+    <hr>
+    <a href= "/register">REGISTER</a>
+    <hr>
+    <a href= "/login">LOG-IN</a>
+  </div>
+
+<!-- Home page header if user IS logged in -->
+<% } else { %>
+<form class="nav-email-greeting" style="margin-left:52vw; font-size:1.3em;" method="POST" action= "/logout">
+  <label for= "email">HELLO, <br><%= user.email %></label>
+  <input class="logout-button" type="submit" value="Log Out">
+</form>
+<% } %>
 </section>
+
+

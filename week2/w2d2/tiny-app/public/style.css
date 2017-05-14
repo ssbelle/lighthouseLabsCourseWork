@@ -1,0 +1,159 @@
+.header-rainbow {
+  height:10px;
+  background: red; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left, red , yellow, green); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, red, yellow, green); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, red, yellow, green); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, blue, purple, red , orange, yellow, green, blue);
+}
+
+
+.header-main {
+  width:100%;
+  background-color: #3F3D3D;
+  height:120px;
+  display:flex;
+  justify-content:space-between;
+  align-items: center;
+}
+
+.logo{
+  margin-left:3vw;
+}
+
+.nav-links-left {
+  display:flex;
+  align-items: center;
+
+}
+
+.nav-links-right {
+  display: flex;
+  align-items: center;
+
+}
+
+.nav-email-greeting{
+  font-family: 'Josefin Sans', sans-serif;
+  text-decoration:none;
+  color:#fff;
+  margin-left: 4vw;
+  margin-right: 4vw;
+  font-size: 1.4em;
+  font-weight:300;
+
+}
+
+.new-link-input-field{
+  background-color:#666;
+  height:3vw;
+  width:100%;
+}
+
+.logout-button{
+  margin-left:1vw;
+}
+
+.secondary-nav-bar{
+  width:100%;
+  background-color: #3F3D3D;
+  height:120px;
+  display:flex;
+  justify-content:space-between;
+  align-items: center;
+}
+
+a {
+  font-family: 'Josefin Sans', sans-serif;
+  text-decoration:none;
+  color:#fff;
+  margin-left: 4vw;
+  margin-right: 4vw;
+  font-size: 1em;
+  font-weight:300;
+}
+
+.body-links{
+  color:#444;
+  margin-left:4vw;
+  font-family: 'Hammersmith One', sans-serif;
+  font-size:1.5em;
+}
+
+hr {
+  height: 5vw;
+}
+
+
+
+
+.new-url-content {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+input {
+  background-color:#818181;
+  width: 4.5vw;
+  height: 1.8vw;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1vw;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+}
+
+.main-content-wrapper{
+  background-color: #666;
+  padding: 30px;
+  width: 40%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-family: 'Josefin Sans', sans-serif;
+
+
+}
+
+.main-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.user-urls-list{
+  display:flex;
+  justify-content: space-around;
+}
+.ul-user-url-list{
+  list-style: none;
+}
+
+.li-user-url-list{
+  box-shadow: 0px 0px 1px;
+  padding: 20px;
+  margin-top: 20px;
+  color:#444;
+  word-wrap: break-word;
+  width: 25vw;
+  text-align: center;
+}
+
+.user-list-bottom{
+  display:flex; margin-top:20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+
+
+
