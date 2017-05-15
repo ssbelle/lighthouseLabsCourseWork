@@ -1,14 +1,14 @@
-const express = require("express");
+const express = require('express');
 
 const app = express();
 
-var PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8080;
 
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 
 const cookieParser = require('cookie-parser');
 
-var cookieSession = require('cookie-session');
+const cookieSession = require('cookie-session');
 
 const bcrypt = require('bcrypt');
 
@@ -17,58 +17,64 @@ app.use(cookieParser());
 app.use(cookieSession({
   name: 'session',
   keys: ['132free', '313mort', 'danman%000']
-}))
+}));
 
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.set("view engine", "ejs");
+app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/Public'));
 
-var urlDatabase = {
-  "b2xVn2": {
-    longURL: "http://www.lighthouselabs.ca",
-    userId: "userRandomID"
+const urlDatabase = {
+  'b2xVn2': {
+    longURL: 'http://www.lighthouselabs.ca',
+    userId: 'userRandomID'
   },
-  "9sm5xK" : {
-    longURL: "http://www.google.com",
-    userId: "user2RandomID"
+  '9sm5xK' : {
+    longURL: 'http://www.google.com',
+    userId: 'user2RandomID'
   }
-}
+};
 
-var userDatabase = {};
+const userDatabase = {};
 
 const users = {
-  "userRandomID": {
-    id: "userRandomID",
-    email: "user@example.com",
-    password: "purple-monkey-dinosaur"
+  'userRandomID': {
+    id: 'userRandomID',
+    email: 'user@example.com',
+    password: 'purple-monkey-dinosaur'
   },
- "user2RandomID": {
-    id: "user2RandomID",
-    email: "user2@example.com",
-    password: "dishwasher-funk"
+ 'user2RandomID': {
+    id: 'user2RandomID',
+    email: 'user2@example.com',
+    password: 'dishwasher-funk'
   }
-}
+};
 
 
 
 function generateRandomString(length, chars) {
-    var result = '';
+    let result = '';
     for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
     return result;
-}
+};
 
-app.get("/", (req, res) => {
-  res.redirect("/urls");
+
+app.get('/', (req, res) => {
+  res.redirect('/urls');
 
 });
 
-app.get("/register", (req, res) => {
-  res.render("register");
+app.get('/register', (req, res) => {
+  res.render('register');
 });
 
-app.post("/register", (req, res) =>{
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}!`);
+});
+
+//checks email and when registering creates new random userId
+app.post('/register', (req, res) =>{
   let checkEmails = Object.keys(users).filter(key => users[key].email == req.body.email)
   if(checkEmails.length > 0){
     res.status(400).send('This email is already registered. Please <a href="/login">Sign-In here!</a>')
@@ -82,58 +88,47 @@ app.post("/register", (req, res) =>{
       email: req.body.email,
       password: hashedPassword
     }
-    console.log(users)
     if(users[user_id].email.length === 0){
       res.status(400).send('Please enter a valid email!');
     }
     if(users[user_id].password.length < 6){
       res.status(400).send('Please enter a password at least 6 characters in length!')
     }
-    //res.cookie("user_id", user_id)
-    //console.log(req.cookies["user_id"], users, users[req.cookies["user_id"]])
-    res.redirect("/urls");
+    res.redirect('/urls');
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}!`);
+
+app.get('/urls/new', (req, res) => {
+  res.render('urls_new', {urlDatabase: urlDatabase, user: req.session['user']});
 });
 
-
-app.get("/urls/new", (req, res) => {
-
-  res.render("urls_new", {urlDatabase: urlDatabase, user: req.session["user"]});
-  console.log(urlDatabase);
-});
-
-//new url and assign random string
-app.post("/urls", (req, res) => {
+//assigns new short urls random string
+app.post('/urls', (req, res) => {
   let newShortURL = generateRandomString(6, '0123456789abcdefghijklmnOPQRSTUVWXYZ')
   urlDatabase[newShortURL] = {longURL: req.body.longURL, userId: req.session["user"].id};
-  console.log(urlDatabase)
-  res.redirect("/urls/" + newShortURL);
+  res.redirect('/urls/' + newShortURL);
 });
 
-app.get("/urls", (req, res) => {
-  var urlObj = {};
-  var userId = req.session["user"]
-             ? req.session["user"].id
+app.get('/urls', (req, res) => {
+  let urlObj = {};
+  let userId = req.session['user']
+             ? req.session['user'].id
              : '';
   for (var url in urlDatabase){
     if(userId === urlDatabase[url].userId)
       urlObj[url] = urlDatabase[url]
   }
-  // let longURL = urlDatabase[req.params.id].longURL;
-  res.render("urls_index", { urlDatabase: urlObj,  user: req.session["user"]});
+  res.render('urls_index', { urlDatabase: urlObj,  user: req.session['user']});
 });
 
-//getting one url reading the signed in user from the cookie
-app.get("/urls/:id", (req, res) => {
-  res.render("urls_show", { newShortURL: req.params.id, longURL: urlDatabase[req.params.id].longURL, user: req.session["user"]});
+//displays middle step after new short url is created and before you8 view the view on /urls -- direction needed for user
+app.get('/urls/:id', (req, res) => {
+  res.render('urls_show', { newShortURL: req.params.id, longURL: urlDatabase[req.params.id].longURL, user: req.session['user']});
 });
 
-//redirecting short link to long link page
-app.get("/u/:id", (req, res) => {
+//shortcut in address bar to redirect short link to long link page
+app.get('/u/:id', (req, res) => {
   let longURL = urlDatabase[req.params.id].longURL;
   res.redirect(longURL);
 });
@@ -144,20 +139,21 @@ app.post('/urls/:url/delete', (req, res) =>{
   res.redirect('/urls');
 });
 
-//app.post('urls/:url/update', (req, res))
+//Changes the long URL
 app.post('/urls/:url/updates', (req, res) => {
   let updatedURL = req.body.longURL;
-  urlDatabase[req.params.url] = updatedURL;
+  urlDatabase[req.params.url].longURL = updatedURL;
   res.redirect('/urls');
  });
 
-app.get('/login', (req, res) => {
-  res.render('login')
-})
 
-//saves input username to an object and sets a cookie function  that compares let email = req.body.email; with user: req.cookies["user_id"]
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+//sets a cookie if the entered login email and password matches the stored registered email & hashed password
 app.post('/login', (req, res) => {
-  var isLoggedIn = false;
+  let isLoggedIn = false;
   for (var user in users){
     if(users[user].email === req.body.email && bcrypt.compareSync(req.body.password, users[user].password)){
       isLoggedIn = true;
@@ -169,8 +165,8 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/logout', (req, res) => {
-  res.clearCookie("session")
-  res.redirect('/urls')
+  res.clearCookie('session');
+  res.redirect('/urls');
 });
 
 

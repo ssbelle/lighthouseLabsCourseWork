@@ -1,13 +1,18 @@
-<% include partials/_header.ejs %>
- <section class="new-url-content">
- <div style="display:flex; justify-content: center; margin-top:50px;">
- <h2>Magic! Here is your new short URL: </h2>
- <a href = "<%= longURL %>"><%= newShortURL %></a>
- </div>
+<!-- urls/:id page  -->
 
- <form method="POST" action= "/urls/<%= newShortURL %>/updates">
-      <label for="longURL">Enter a URL:</label>
-      <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
-      <input type="submit" value="UPDATE">
-    </form>
+<% include ./partials/_header.ejs %>
+<section style="display:flex; flex-direction:column; align-items: center;justify-content: center;margin-top:5vw; font-family: 'Josefin Sans', sans-serif">
+ <div style="display: flex; flex-direction: row; align-items: center;">
+   <h2 style="font-family: 'Josefin Sans', sans-serif; margin-left:5px;"> Here is your short URL:</h2>
+   <a class="body-links" target="_blank" href = "<%= longURL %>"><%= newShortURL %></a>
+ </div>
+<div>
+  <h2 style=""> Change the link here anytime!</h2>
+  <form style="font-family: 'Josefin Sans', sans-serif;" method="POST"
+  action= "/urls/<%= newShortURL %>/updates">
+    <label for="longURL"></label>
+    <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
+    <input type="submit" value="UPDATE">
+  </form>
+</div>
 </section>
